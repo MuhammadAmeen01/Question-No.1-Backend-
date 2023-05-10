@@ -3,25 +3,25 @@
 #include <stdlib.h>
 
 typedef enum {
-    ADD, SUB, MUL, DIV, CONST, VAR
+    ADD, SUB, MUL, DIV, CONST, VAR //typtag enumeration, used for arithmetic operators
 } TypeTag;
 
-typedef struct Node {
+typedef struct Node { //structure in c, which includes value, type and left and right node type pointers
     TypeTag type;
     int value;
     struct Node *left;
     struct Node *right;
 } Node;
 
-typedef struct Memo {
+typedef struct Memo { //structure in C, used to store values and key which is precalculated.
     int key;
     int value;
 } Memo;
 
-Memo memo[1000];
+Memo memo[1000]; //defines the structure array.
 int memo_len = 0;
 
-int fibonacci_using_Memoization(int n) {
+int fibonacci_using_Memoization(int n) {  //fibonacci function which used Memoization method of dynamic programming.
     printf("n: %d \n",n);
     if (n <= 1) {
         return n;
@@ -39,7 +39,7 @@ int fibonacci_using_Memoization(int n) {
 }
 
 
-int fibonacci_using_bottomUp_Approach(int n) {
+int fibonacci_using_bottomUp_Approach(int n) { //Bottom up approach of Dynamic programming, which solves the smaller problem first and use it compute further problems.
     if (n <= 1) {
         return n;
     }
@@ -56,7 +56,7 @@ int fibonacci_using_bottomUp_Approach(int n) {
     return fib;
 }
 
-int fibonacci_Iterative_Approach(int n) {
+int fibonacci_Iterative_Approach(int n) { //Iterative Approach of Dynamic Programming, which uses loop to iterate through fix size of iteration, and compute the result.
     if (n <= 1) {
         return n;
     }
@@ -89,14 +89,14 @@ Node *makeVar() {
 }
 
 Node *makeFunc(TypeTag type) {
-    Node *node = malloc(sizeof(Node));
+    Node *node = malloc(sizeof(Node)); //this function assign the operator that is sent as paramter to the node.
     node->type = type;
     node->left = NULL;
     node->right = NULL;
     return node;
 }
 
-int calc(Node *node) {
+int calc(Node *node) { //recursive function to call calc method, which compute the result based on node type and return back the value.
     switch (node->type) {
         case ADD:
             return calc(node->left) + calc(node->right);
@@ -115,6 +115,7 @@ int calc(Node *node) {
 }
 
 int main() {
+    //main method to call other defined functions.
     Node *add = makeFunc(ADD);
     add->left = makeConst(10);
     add->right = makeConst(6);
